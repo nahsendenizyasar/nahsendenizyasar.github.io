@@ -1,0 +1,56 @@
+name: Build CV PDF
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/cv-data/**'
+      - '.github/workflows/build-cv-pdf.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-pdf:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Assemble and validate PDF
+        shell: python
+        run: |
+          from pathlib import Path
+          import base64
+          import re
+
+          folder = Path('assets/cv-data')
+          parts = sorted(
+              folder.glob('part*.txt'),
+              key=lambda p: int(re.search(r'(\d+)', p.stem).group(1))
+          )
+          if not parts:
+              raise SystemExit('No CV data parts found')
+
+          encoded = ''.join(p.read_text(encoding='utf-8').strip() for p in parts)
+          pdf = base64.b64decode(encoded, validate=True)
+          if not pdf.startswith(b'%PDF-') or b'%%EOF' not in pdf[-2048:]:
+              raise SystemExit('Assembled file is not a valid PDF')
+
+          target = Path('assets/Nahsen_Deniz_Yasar_CV.pdf')
+          target.write_bytes(pdf)
+          print(f'Created {target} from {len(parts)} parts ({len(pdf)} bytes)')
+
+      - name: Commit generated PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/Nahsen_Deniz_Yasar_CV.pdf
+          if git diff --cached --quiet; then
+            echo "PDF is already current."
+          else
+            git commit -m "Build direct CV PDF"
+            git push
+          fi
