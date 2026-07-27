@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Lebenslauf von Nahsen Deniz Yaşar – Produktionslogistik, Wareneingang, Materialfluss und SAP MM Anwenderkenntnisse.">
+  <title>Nahsen Deniz Yaşar | Lebenslauf PDF</title>
+  <style>
+    :root{--bg:#06111f;--panel:#0d253e;--text:#f5f8ff;--muted:#c6d2e7;--accent:#65b8ff;--line:rgba(112,184,255,.28)}
+    *{box-sizing:border-box}html,body{height:100%}body{margin:0;background:linear-gradient(180deg,#04101d,#06111f);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}.bar{min-height:72px;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid rgba(255,255,255,.1);background:rgba(3,13,25,.96)}.name{font-weight:850;letter-spacing:-.02em}.subtitle{margin-top:3px;color:var(--muted);font-size:.88rem}.actions{display:flex;flex-wrap:wrap;gap:10px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 16px;border:1px solid var(--line);border-radius:999px;color:#fff;text-decoration:none;font-weight:750;background:rgba(101,184,255,.09)}.button.primary{background:linear-gradient(180deg,rgba(80,166,255,.46),rgba(33,120,207,.56))}.button.disabled{opacity:.5;pointer-events:none}.stage{height:calc(100% - 72px);padding:14px}.viewer{width:100%;height:100%;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.status{height:100%;display:grid;place-items:center;text-align:center;padding:28px;color:var(--muted)}.status strong{display:block;margin-bottom:8px;color:#fff;font-size:1.15rem}@media(max-width:720px){.bar{align-items:flex-start;flex-direction:column}.stage{height:calc(100% - 132px);padding:8px}}
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <div><div class="name">Nahsen Deniz Yaşar</div><div class="subtitle">Produktionslogistik · Wareneingang · Materialfluss · SAP MM Anwender</div></div>
+    <div class="actions"><a class="button" href="index.html">← Portfolio</a><a id="download" class="button primary disabled" href="#">PDF herunterladen</a></div>
+  </header>
+  <main class="stage">
+    <div id="status" class="status"><div><strong>Lebenslauf wird geladen …</strong>Die aktuelle PDF-Version wird vorbereitet.</div></div>
+    <iframe id="viewer" class="viewer" title="Lebenslauf PDF" hidden></iframe>
+  </main>
+<script>
+(async()=>{
+  const parts=Array.from({length:9},(_,i)=>`assets/cv-data/part${i}.txt`);
+  try{
+    const chunks=await Promise.all(parts.map(async path=>{const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw new Error(path);return r.text()}));
+    const base64=chunks.join('').replace(/\s/g,'');
+    const binary=atob(base64);
+    const bytes=new Uint8Array(binary.length);
+    for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+    const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+    const viewer=document.getElementById('viewer');
+    viewer.src=url;
+    viewer.hidden=false;
+    document.getElementById('status').hidden=true;
+    const download=document.getElementById('download');
+    download.href=url;
+    download.download='Nahsen_Deniz_Yasar_CV_Produktionslogistik_Wareneingang.pdf';
+    download.classList.remove('disabled');
+  }catch(error){
+    document.getElementById('status').innerHTML='<div><strong>PDF konnte nicht geladen werden.</strong>Bitte laden Sie die Seite erneut oder öffnen Sie das Portfolio.</div>';
+    console.error(error);
+  }
+})();
+</script>
+</body>
+</html>
