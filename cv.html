@@ -3,57 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Lebenslauf von Nahsen Deniz Yaşar – Produktionslogistik, Wareneingang, Materialfluss und SAP MM Anwenderkenntnisse.">
-  <title>Nahsen Deniz Yaşar | Lebenslauf PDF</title>
-  <style>
-    :root{--bg:#06111f;--panel:#0d253e;--text:#f5f8ff;--muted:#c6d2e7;--accent:#65b8ff;--line:rgba(112,184,255,.28)}
-    *{box-sizing:border-box}body{min-height:100vh;margin:0;display:grid;place-items:center;padding:24px;background:linear-gradient(180deg,#04101d,#06111f);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}.box{width:min(620px,100%);padding:30px;border:1px solid var(--line);border-radius:18px;background:var(--panel);text-align:center}.box h1{margin:0 0 10px;font-size:1.45rem}.box p{margin:0;color:var(--muted)}.actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:22px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:11px 17px;border:1px solid var(--line);border-radius:999px;color:#fff;text-decoration:none;font-weight:750;background:rgba(101,184,255,.09)}.button.primary{background:linear-gradient(180deg,rgba(80,166,255,.46),rgba(33,120,207,.56))}.button.disabled{opacity:.45;pointer-events:none}.error{color:#ffd1d1!important}
-  </style>
+  <meta http-equiv="refresh" content="0; url=assets/Nahsen_Deniz_Yasar_CV.pdf">
+  <title>Lebenslauf – Nahsen Deniz Yaşar</title>
+  <style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#06111f;color:#f5f8ff;font-family:Arial,sans-serif;text-align:center;padding:24px}a{color:#65b8ff;font-weight:700}</style>
 </head>
 <body>
-  <main class="box">
-    <h1>Lebenslauf wird geöffnet …</h1>
-    <p id="status">Die aktuelle PDF-Version wird vorbereitet.</p>
-    <div class="actions">
-      <a class="button" href="index.html">← Portfolio</a>
-      <a id="open" class="button primary disabled" href="#">PDF öffnen</a>
-      <a id="download" class="button disabled" href="#">PDF herunterladen</a>
-    </div>
-  </main>
-<script>
-(async()=>{
-  const parts=Array.from({length:9},(_,i)=>`assets/cv-data/part${i}.txt`);
-  try{
-    const chunks=[];
-    for(const path of parts){
-      const response=await fetch(path,{cache:'no-store'});
-      if(!response.ok) throw new Error(`Fehlende Datei: ${path}`);
-      chunks.push(await response.text());
-    }
-    const base64=chunks.join('').replace(/\s/g,'');
-    const binary=atob(base64);
-    const bytes=new Uint8Array(binary.length);
-    for(let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
-    if(binary.slice(0,5)!=='%PDF-') throw new Error('Ungültige PDF-Daten');
-
-    const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
-    const open=document.getElementById('open');
-    const download=document.getElementById('download');
-    open.href=url;
-    download.href=url;
-    download.download='Nahsen_Deniz_Yasar_CV_Produktionslogistik_Wareneingang.pdf';
-    open.classList.remove('disabled');
-    download.classList.remove('disabled');
-    document.getElementById('status').textContent='Die PDF ist bereit. Sie wird jetzt geöffnet.';
-
-    window.setTimeout(()=>window.location.replace(url),150);
-  }catch(error){
-    const status=document.getElementById('status');
-    status.classList.add('error');
-    status.textContent='Die PDF konnte nicht geladen werden. Bitte öffnen Sie die Seite erneut.';
-    console.error(error);
-  }
-})();
-</script>
+  <p>Der Lebenslauf wird geöffnet.<br><a href="assets/Nahsen_Deniz_Yasar_CV.pdf">PDF direkt öffnen</a></p>
+  <script>window.location.replace('assets/Nahsen_Deniz_Yasar_CV.pdf');</script>
 </body>
 </html>
